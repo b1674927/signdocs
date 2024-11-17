@@ -3,7 +3,7 @@
 A command line program to (1) cryptographically sign documents and (2) verify signatures
 
 - You need an Ethereum private key to sign
-- The app creates a Keccak256 hash of the document and creates an ECDSA signature using your private key
+- The app creates a Keccak256 hash of the document you provide and creates an ECDSA signature using your private key
 - Alternatively, the app recovers the address from a signature and hash, i.e., verifies the signature
 - Keys that you enter are not stored and not visible in the console
 - `\x19Ethereum Signed Message:\n` is _not_ prefixed to the data
@@ -69,11 +69,14 @@ GLOBAL OPTIONS:
 # Install using make
 
 - clone this repo
+- building the app requires go, see https://go.dev/doc/install
 - ensure go version >=1.23.3 is installed
+
   ```
   $ go version
   go version go1.23.3 linux/amd64
   ```
+
 - run make in the folder you cloned
   ```bash
   $cd signdocs
