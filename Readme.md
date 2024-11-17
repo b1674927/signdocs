@@ -2,8 +2,9 @@
 
 A command line program to cryptographically sign documents and recover the address from a signature and hash.
 
-The app creates a Keccak256 hash of the document and creates an ECDSA signature
-`\x19Ethereum Signed Message:\n` is _not_ prefixed to the data.
+- The app creates a Keccak256 hash of the document and creates an ECDSA signature
+- `\x19Ethereum Signed Message:\n` is _not_ prefixed to the data
+- Keys that you enter are not stored and not visible in the console
 
 ## Sign
 
@@ -43,6 +44,10 @@ You enter the hash and signature as prompted and signdocs will show you the sign
 
 ## Help
 
+$ signdocs help
+$ signdocs sign help
+$ signdocs recover help
+
 ```
 $ signdocs help
 NAME:
@@ -68,8 +73,12 @@ GLOBAL OPTIONS:
   $ go version
   go version go1.23.3 linux/amd64
   ```
-- run make
+- run make in the folder you cloned
   ```bash
-  make
+  $cd signdocs
+  $make
+  ```
+  Copy the executable into folder in your executable path, for example (Linux):
+  ```
   sudo cp ./build/signdocs /usr/local/bin
   ```
