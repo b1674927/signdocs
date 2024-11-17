@@ -13,6 +13,24 @@ $ signdocs sign mydoc.pdf
 
 You enter your private-key as prompted and signdocs will show you the hash of 'mydoc.pdf' and your signature of the hash.
 
+$ signdocs sign -f outfile.json mydoc.pdf
+Example:
+
+```
+{
+  "metadata": {
+    "name": "document.pdf",
+    "description": "my document available at source",
+    "timestamp": "2024-11-17T21:47:14Z"
+  },
+  "fileHash": "0xdc07ae4dd8c0975e27284314d4f078efc3567b5bd482786c5db3cb550fc9055a",
+  "signature": "0xff457afdfe05fe84d5380bf573d84d84baaae3b30980974b35c05ed9f9d26db42bfcf8853bd8a768af80620f1f8f5c27498b8d4e90dcf086c4f9bae53029d89300",
+  "signer": "0x7Fee781C115AB16a0065E5023ee63f4950F2F06c"
+}
+```
+
+Note that the metadata is not signed, only the hash.
+
 ## Recover
 
 Type

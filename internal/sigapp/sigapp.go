@@ -16,6 +16,19 @@ const (
 	SUB_RECOVER
 )
 
+type DocumentSignature struct {
+	Metadata  Metadata `json:"metadata"`
+	FileHash  string   `json:"fileHash"`  // The keccak256 hash of the document
+	Signature string   `json:"signature"` // ECDSA signature of the file hash
+	Signer    string   `json:"signer"`    // Ethereum address of the signer
+}
+
+type Metadata struct {
+	Name        string `json:"name"`        // File name
+	Description string `json:"description"` // Description of the file
+	Timestamp   string `json:"timestamp"`   // ISO 8601 timestamp
+}
+
 func Run(args []string) {
 	app := &cli.App{
 		Name:  "signdocs",
@@ -24,11 +37,18 @@ func Run(args []string) {
 			fmt.Printf("Unknown command %s\n", s)
 		},
 		Commands: []*cli.Command{
+
 			{
 				Name:      "sign",
 				Usage:     "sign a file",
 				UsageText: "signdocs sign [document.pdf] - Signs the specified document",
 				Action:    SignCommand,
+				Flags: []cli.Flag{&cli.StringFlag{
+					Name:    "file",
+					Aliases: []string{"f"},
+					Value:   "",
+					Usage:   "output file",
+				}},
 			},
 			{
 				Name:      "recover",
@@ -42,31 +62,3 @@ func Run(args []string) {
 		log.Fatal(err)
 	}
 }
-
-// 	subCmd := SUB_HELP
-// 	if len(args) > 0 {
-// 		subCmd = strToSubCommand(args[1])
-// 	}
-// 	switch subCmd {
-// 	case SUB_HELP:
-// 		help()
-// 		return
-// 	case SUB_SIGN:
-// 		if len(args) < 2 {
-// 			help()
-// 			return
-// 		}
-// 		filename := args[2]
-// 		fileData, err := os.ReadFile(filename)
-// 		if err != nil {
-// 			log.Fatalf("Failed to read file: %v", err)
-// 			os.Exit(1)
-// 		}
-// 		p := tea.NewProgram(initialModel(filename, fileData))
-// 		if _, err := p.Run(); err != nil {
-// 			fmt.Printf("Error: %v\n", err)
-// 			os.Exit(1)
-// 		}
-// 	}
-
-// }
