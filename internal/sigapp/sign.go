@@ -2,7 +2,6 @@ package sigapp
 
 import (
 	"crypto/ecdsa"
-	"crypto/sha256"
 	"fmt"
 	"os"
 	"strings"
@@ -21,7 +20,7 @@ type SignModel struct {
 	input      textinput.Model
 	file       []byte
 	fileName   string
-	filehash   [32]byte
+	filehash   []byte
 	signature  []byte
 }
 
@@ -124,7 +123,7 @@ func (m SignModel) View() string {
 	case showSign:
 		msg := fmt.Sprintf("File processed: %s\n", m.fileName)
 		msg = msg + fmt.Sprintf("Your signer address is:\n%s\n", m.ethAddress)
-		msg = msg + fmt.Sprintf("The SHA-256 hash of your file is:\n%x\n", m.filehash)
+		msg = msg + fmt.Sprintf("The Keccak-256 hash of your file is:\n%x\n", m.filehash)
 		msg = msg + fmt.Sprintf("Your signature of the hash is:\n%x\n", m.signature)
 		return msg
 	}
@@ -133,7 +132,7 @@ func (m SignModel) View() string {
 
 // Dummy file processing function
 func (m *SignModel) processFile() error {
-	hash := sha256.Sum256(m.file)
+	hash := crypto.Keccak256(m.file)
 	m.filehash = hash
 	// Sign the hash
 	var err error

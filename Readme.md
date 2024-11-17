@@ -2,6 +2,9 @@
 
 A command line program to cryptographically sign documents and recover the address from a signature and hash.
 
+The app creates a Keccak256 hash of the document and creates an ECDSA signature
+`\x19Ethereum Signed Message:\n` is _not_ prefixed to the data.
+
 ## Sign
 
 ```
