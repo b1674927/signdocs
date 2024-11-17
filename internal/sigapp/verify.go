@@ -139,7 +139,7 @@ func (m VerifyModel) View() string {
 			Render("Enter the signature of the hash:") +
 			m.input.View()
 	case showVerify:
-		msg := fmt.Sprintf("Verifyed address: %s\n", m.ethAddress)
+		msg := fmt.Sprintf("Recovered address: %s\n", m.ethAddress)
 		return msg
 	}
 	return ""

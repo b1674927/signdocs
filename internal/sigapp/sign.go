@@ -59,7 +59,7 @@ func initialSignModel(filename string, file []byte, fileOut string) SignModel {
 		fileName: filename,
 		fileOut:  fileOut,
 	}
-	m.input.CharLimit = 66
+	m.input.CharLimit = 500
 	m.input.Placeholder = "CaFe..."
 	m.input.Focus()
 	m.input.EchoMode = textinput.EchoPassword
