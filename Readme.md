@@ -45,9 +45,9 @@ You enter the hash and signature as prompted and signdocs will show you the sign
 
 ## Help
 
-$ signdocs help
-$ signdocs sign help
-$ signdocs recover help
+- `$ signdocs help`
+- `$ signdocs sign help`
+- `$ signdocs recover help`
 
 ```
 $ signdocs help
