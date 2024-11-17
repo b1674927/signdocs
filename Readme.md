@@ -14,6 +14,7 @@ $ signdocs sign mydoc.pdf
 
 You enter your private-key as prompted and signdocs will show you the hash of 'mydoc.pdf' and your signature of the hash.
 
+You can create a metadata file with the signature of the document and its hash with the option --file or -f (see signdocs sign help)
 $ signdocs sign -f outfile.json mydoc.pdf
 Example:
 
