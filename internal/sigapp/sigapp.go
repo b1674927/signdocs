@@ -41,7 +41,7 @@ func Run(args []string) {
 			{
 				Name:      "sign",
 				Usage:     "sign a file",
-				UsageText: "signdocs sign [document.pdf] - Signs the specified document",
+				UsageText: "signdocs sign [document.pdf] - Signs the specified document\nsigndocs sign --file out.json [document.pdf] - Signs the specified document and writes the output to out.json",
 				Action:    SignCommand,
 				Flags: []cli.Flag{&cli.StringFlag{
 					Name:    "file",
