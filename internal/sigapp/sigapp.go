@@ -51,10 +51,10 @@ func Run(args []string) {
 				}},
 			},
 			{
-				Name:      "recover",
+				Name:      "verify",
 				Usage:     "recover an address from signature and hash",
-				UsageText: "signdocs recover",
-				Action:    RecoverCommand,
+				UsageText: "signdocs verify",
+				Action:    VerifyCommand,
 			},
 		},
 	}

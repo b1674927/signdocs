@@ -13,37 +13,37 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-type RecoverModel struct {
-	state      RecoverState
+type VerifyModel struct {
+	state      VerifyState
 	ethAddress string
 	input      textinput.Model
 	filehash   [32]byte
 	signature  []byte
 }
 
-type RecoverState int
+type VerifyState int
 
 const (
-	enterHash RecoverState = iota
+	enterHash VerifyState = iota
 	enterSig
-	showRecover
+	showVerify
 )
 
-func RecoverCommand(cCtx *cli.Context) error {
-	p := tea.NewProgram(initialRecoverModel())
+func VerifyCommand(cCtx *cli.Context) error {
+	p := tea.NewProgram(initialVerifyModel())
 	if _, err := p.Run(); err != nil {
 		return fmt.Errorf("Error: %v\n", err)
 	}
 	return nil
 }
 
-func (m RecoverModel) Init() tea.Cmd {
+func (m VerifyModel) Init() tea.Cmd {
 	return textinput.Blink
 }
 
-func initialRecoverModel() RecoverModel {
+func initialVerifyModel() VerifyModel {
 
-	m := RecoverModel{
+	m := VerifyModel{
 		state: enterHash,
 		input: textinput.New(),
 	}
@@ -51,7 +51,7 @@ func initialRecoverModel() RecoverModel {
 	return m
 }
 
-func (m RecoverModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m VerifyModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch m.state {
 	case enterHash:
 		switch msg := msg.(type) {
@@ -90,8 +90,8 @@ func (m RecoverModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.input.Placeholder = "Invalid signature, try again"
 					return m, nil
 				}
-				m.recover()
-				m.state = showRecover
+				m.verify()
+				m.state = showVerify
 				return m, nil
 			case "ctrl+c":
 				return m, tea.Quit
@@ -100,7 +100,7 @@ func (m RecoverModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		var cmd tea.Cmd
 		m.input, cmd = m.input.Update(msg)
 		return m, cmd
-	case showRecover:
+	case showVerify:
 		return m, tea.Quit
 	}
 	return m, nil
@@ -126,7 +126,7 @@ func stringToHash(input string) ([32]byte, error) {
 	return hash, nil
 }
 
-func (m RecoverModel) View() string {
+func (m VerifyModel) View() string {
 	switch m.state {
 	case enterHash:
 		return lipgloss.NewStyle().
@@ -138,16 +138,16 @@ func (m RecoverModel) View() string {
 			Foreground(lipgloss.Color("5")).
 			Render("Enter the signature of the hash:") +
 			m.input.View()
-	case showRecover:
-		msg := fmt.Sprintf("Recovered address: %s\n", m.ethAddress)
+	case showVerify:
+		msg := fmt.Sprintf("Verifyed address: %s\n", m.ethAddress)
 		return msg
 	}
 	return ""
 }
 
-func (m *RecoverModel) recover() {
+func (m *VerifyModel) verify() {
 	hash := m.filehash
-	// Recover the public key from the signature
+	// Verify the public key from the signature
 	publicKey, err := crypto.SigToPub(hash[:], m.signature)
 	if err != nil {
 		log.Fatalf("Failed to recover public key: %v", err)

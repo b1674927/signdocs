@@ -1,10 +1,12 @@
 # Signdocs
 
-A command line program to cryptographically sign documents and recover the address from a signature and hash.
+A command line program to (1) cryptographically sign documents and (2) verify signatures
 
-- The app creates a Keccak256 hash of the document and creates an ECDSA signature
-- `\x19Ethereum Signed Message:\n` is _not_ prefixed to the data
+- You need an Ethereum private key to sign
+- The app creates a Keccak256 hash of the document and creates an ECDSA signature using your private key
+- Alternatively, the app recovers the address from a signature and hash, i.e., verifies the signature
 - Keys that you enter are not stored and not visible in the console
+- `\x19Ethereum Signed Message:\n` is _not_ prefixed to the data
 
 ## Sign
 
@@ -35,10 +37,8 @@ Note that the metadata is not signed, only the hash.
 
 ## Recover
 
-Type
-
 ```
-$ signdocs recover
+$ signdocs verify
 ```
 
 You enter the hash and signature as prompted and signdocs will show you the signer's address.
@@ -47,7 +47,7 @@ You enter the hash and signature as prompted and signdocs will show you the sign
 
 - `$ signdocs help`
 - `$ signdocs sign help`
-- `$ signdocs recover help`
+- `$ signdocs verify help`
 
 ```
 $ signdocs help
@@ -59,7 +59,7 @@ USAGE:
 
 COMMANDS:
    sign     sign a file
-   recover  recover an address from signature and hash
+   verify   recover an address from signature and hash
    help, h  Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
